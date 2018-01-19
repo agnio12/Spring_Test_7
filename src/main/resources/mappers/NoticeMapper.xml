@@ -37,12 +37,14 @@
 		select * from notice where num=#{num}
 	</select>
 	
-	<!-- nextval -->
-	<select id="num" resultType="int">
-		select board_seq.nextval from dual
-	</select>
-	
 	<insert id="insert" parameterType="NoticeDTO">
+	 <!-- 밑에 insert 커리문을 실행기 전에 selectKey 커리문을 실행하고 그 결과의 값을 num에 넣어라
+		    NoticeDTO에 num에는 값이 0 이기 때문에 board_seq.nextval 해준 값을 넣어주는 것
+		    그러면 밑에 #{num}에  board_seq.nextval 값이 들어간다 그 값을 Service에서 꺼내주기 위해 하는 작업
+		    insert커리문에 그냥 board_seq.nextval 을 해버리면 값이 들어가는게 아니기 때문에 Service에서 getNum() 했을때 0 이 나온다  -->
+		<selectKey resultType="int" order="BEFORE" keyProperty="num">
+			select board_seq.nextval from dual 
+		</selectKey>
 		insert into notice values (#{num},#{title},#{writer},#{contents},0,sysdate)
 	</insert>
 

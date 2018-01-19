@@ -24,7 +24,7 @@ public class NoticeController {
 	@Inject
 	private NoticeService noticeService;
 
-	//List
+	//List (SelcetList)
 	@RequestMapping(value="noticeList", method=RequestMethod.GET)
 	public ModelAndView selectList(ListData listData) throws Exception{
 		ModelAndView mv = new ModelAndView();
@@ -65,6 +65,11 @@ public class NoticeController {
 		return "redirect:./noticeList?curPage="; 
 		*/
 	}
+	
+	//View (SelectOne)
+	@RequestMapping(value="noticeView", method=RequestMethod.GET)
+	public void noticeView(int num) throws Exception{
+	}
 
-
+	
 }

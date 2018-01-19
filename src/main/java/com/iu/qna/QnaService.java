@@ -42,9 +42,11 @@ public class QnaService implements BoardService {
 
 	@Override
 	public int insert(BoardDTO boardDTO, MultipartFile[] file, HttpSession session) throws Exception {
-		int num = qnaDAO.num();
-		boardDTO.setNum(num);
-		qnaDAO.insert(boardDTO);
+		/*Mapper에서  selectKey 해준 num이  boardDTO의 num의 값으로 들어가 있다 
+		   그 값을 밑에 fileDTO.setNum(boardDTO.getNum()); 해줘서 파일의 num에 현재 글번호를 넣어주는 것
+	       그러면 0 이 아닌 현재 글 번호를 가져올 수 있다
+	       파일 컬럼에 num은 현재글의 번호를 가져와야 하기 때문에 먼저 qna를 insert 해준후 파일을insert 해줘야 한다*/
+		qnaDAO.insert(boardDTO); 
 		
 		FileSaver fs = new FileSaver();
 		String filePath = session.getServletContext().getRealPath("resources/upload");
@@ -58,9 +60,8 @@ public class QnaService implements BoardService {
 			FileDTO fileDTO = new FileDTO();
 			fileDTO.setFname(names.get(i));
 			fileDTO.setOname(file[i].getOriginalFilename());
-			fileDTO.setNum(num); //현재 글번호
-		 System.out.println(fileDAO.insert(fileDTO));
-			
+			fileDTO.setNum(boardDTO.getNum()); //현재 글번호
+			fileDAO.insert(fileDTO);
 		}
 		return 1;
 	}

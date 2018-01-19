@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileSaver {
 	
+	//파일을 하나 올릴때 사용
 	public String saver(MultipartFile file, String filePath) throws Exception{
 		String fileName = file.getOriginalFilename(); //원본 파일명
 		fileName = fileName.substring(fileName.indexOf(".")); //원본 파일명에서 확장자만 빼내기
@@ -25,7 +26,7 @@ public class FileSaver {
 		try {
 			FileCopyUtils.copy(file.getBytes(), f);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		
 		//file.transferTo(f); → Transfer 방식
@@ -33,11 +34,11 @@ public class FileSaver {
 		return fileName;
 	}
 	
+	//올리는 파일이 다수일 경우 위에 메서드를 호출하여 for문을 돌려준다 / 여기에 파일명을 저장시켜주는 코드를 작성후 for문을 돌려도 가능
 	public List<String> saver(MultipartFile [] file, String filePath) throws Exception{
 		List<String> fileNames = new ArrayList<>();
 		for (MultipartFile f : file) {
 			String fileName = this.saver(f, filePath);
-			System.out.println(fileName);
 			fileNames.add(fileName);
 		}
 		return fileNames;
