@@ -38,21 +38,23 @@
 
 	<!-- Select One -->
 	<select id="selectOne" parameterType="int" resultType="QnaDTO">
-		select *
-		from qna where num=#{num}
+		select * from qna where num=#{num}
+	</select>
+
+	<!-- nextval -->
+	<select id="num" resultType="int">
+		select board_seq.nextval from dual
 	</select>
 
 	<!-- Insert -->
 	<insert id="insert" parameterType="QnaDTO">
 		insert into qna values
-		(board_seq.nextval, #{title}, #{writer}, #{contents}, 0, sysdate,
-		board_seq.currval, 0, 0)
+		(#{num}, #{title}, #{writer}, #{contents}, 0, sysdate, board_seq.currval, 0, 0)
 	</insert>
 
 	<!-- Update -->
 	<update id="update" parameterType="QnaDTO">
-		update qna set title=#{title},
-		contents=#{contents} where num=#{num}
+		update qna set title=#{title}, contents=#{contents} where num=#{num}
 	</update>
 
 	<!-- Delete -->

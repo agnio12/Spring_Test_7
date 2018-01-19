@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var i = 0;
@@ -14,7 +15,7 @@
 				var ex = $("#ex").html();
 				$("#result").append(ex);
 				i++;
-			}else{
+			} else {
 				alert("최대 5개까지다")
 			}
 		});
@@ -52,7 +53,7 @@
 </style>
 </head>
 <body>
-	<h1>${board} Write</h1>
+	<h1>${board}Write</h1>
 	<form action="./${board}Write" method="post" enctype="multipart/form-data">
 		<p>
 			Writer : <input type="text" name="writer">
@@ -68,12 +69,12 @@
 			<input type="button" value="FileAdd" id="btn">
 		</p>
 		<div id="result"></div>
-		<div id="ex">
-			<input type="file" name="file"><span class="x">X</span>
-		</div>
-
 		<button>Write</button>
 	</form>
+
+	<div id="ex">
+		<input type="file" name="file"><span class="x">X</span>
+	</div>
 
 </body>
 </html>

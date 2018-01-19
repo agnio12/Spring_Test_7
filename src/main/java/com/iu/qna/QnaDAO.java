@@ -27,6 +27,11 @@ public class QnaDAO implements BoardDAO { //Annotation 방식
 		return sqlSession.selectOne(NAMESPACE+"selectOne", num);
 	}
 
+	//Nextval 번호를 가져오는 메서드
+	public int num()throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"num");
+	}
+	
 	@Override
 	public int insert(BoardDTO boardDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"insert", boardDTO);
