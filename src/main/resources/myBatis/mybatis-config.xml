@@ -5,10 +5,10 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.iu.notice.NoticeDTO" alias="NoticeDTO" />
-		<typeAlias type="com.iu.qna.QnaDTO" alias="QnaDTO" />
-		<typeAlias type="java.util.Map" alias="Map"/>
-		<typeAlias type="com.iu.util.ListData" alias="ListData"/>
-		<typeAlias type="com.iu.file.FileDTO" alias="FileDTO"/>
+			<typeAlias type="com.iu.notice.NoticeDTO" alias="NoticeDTO"/>
+  		<typeAlias type="com.iu.qna.QnaDTO" alias="QnaDTO"/>
+  		<typeAlias type="java.util.Map" alias="Map"/>
+  		<typeAlias type="com.iu.util.ListData" alias="listData"/>
+  		<typeAlias type="com.iu.file.FileDTO" alias="FileDTO"/>
 	</typeAliases>
 </configuration>

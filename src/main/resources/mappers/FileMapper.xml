@@ -2,8 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="FileMapper">
 
+	<select id="selectList" parameterType="int" resultType="FileDTO">
+		select * from files where num=#{num}
+	</select>
+	
 	<insert id="insert" parameterType="FileDTO">
 		insert into files values(board_seq.nextval,#{num},#{fname},#{oname})
 	</insert>
+	
+	<update id="update" parameterType="FileDTO">
+		update files set fname=#{fname}, oname=#{oname}	 where num=#{num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete files where num=#{num}
+	</delete>
+	
+	<delete id="deleteFnum" parameterType="int">
+		delete files where fnum=#{fnum}
+	</delete>
 
 </mapper>

@@ -2,6 +2,8 @@ package com.iu.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.iu.util.ListData;
 
 public interface BoardDAO {

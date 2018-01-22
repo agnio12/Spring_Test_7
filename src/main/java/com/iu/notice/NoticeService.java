@@ -66,12 +66,28 @@ public class NoticeService implements BoardService {
 
 	@Override
 	public int update(BoardDTO boardDTO) throws Exception {
-		return noticeDAO.update(boardDTO);
+		int result = noticeDAO.update(boardDTO);
+		FileDTO fileDTO = new FileDTO();
+		result = fileDAO.update(fileDTO);
+		
+		return result;
 	}
 
 	@Override
-	public int delete(int num) throws Exception {
-		return noticeDAO.delete(num);
+	public int delete(int num, HttpSession session) throws Exception {
+		String filePath = session.getServletContext().getRealPath("resources/upload");
+		List<FileDTO> ar =  fileDAO.selectList(num);
+		int result = noticeDAO.delete(num);
+		result = fileDAO.delete(num);
+		for (FileDTO fileDTO : ar) {
+			try {
+				File file = new File(filePath, fileDTO.getFname()); 
+				file.delete(); // 지우는 작업을 하는 도중에 에러가 발생하면 넘어가고 그대로 for문을 실행 할수 있도록 해주기 위해 try문 작성
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		return result;
 	}
 	
 }

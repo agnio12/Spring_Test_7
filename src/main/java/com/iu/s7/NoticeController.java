@@ -37,7 +37,7 @@ public class NoticeController {
 	}
 
 
-	//Write (Insert)
+	//Write (Insert) & FileUpload
 	@RequestMapping(value="noticeWrite", method=RequestMethod.GET)
 	public String noticeWrite(Model model) throws Exception{
 		model.addAttribute("board", "notice");
@@ -46,7 +46,6 @@ public class NoticeController {
 	@RequestMapping(value="noticeWrite", method=RequestMethod.POST)
 	public ModelAndView noticeWrite(NoticeDTO noticeDTO, MultipartFile [] file, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		
 		int result = 0;
 		result = noticeService.insert(noticeDTO, file, session);
 		
@@ -60,15 +59,61 @@ public class NoticeController {
 		mv.setViewName("common/result");
 		return mv;
 		
-		/* Redirect 방식 - 리턴 String / 매개변수 RedirectAttributes
+		/* Redirect 방식 - 리턴타입 → String / 매개변수 → RedirectAttributes
 		rd.addFlashAttribute("message", "Success");
 		return "redirect:./noticeList?curPage="; 
 		*/
 	}
 	
+	
 	//View (SelectOne)
-	@RequestMapping(value="noticeView", method=RequestMethod.GET)
-	public void noticeView(int num) throws Exception{
+	@RequestMapping(value="noticeView")
+	public ModelAndView selectOne(int num)throws Exception{
+		 BoardDTO boardDTO = noticeService.selectOne(num);
+		 ModelAndView mv = new ModelAndView();
+		 mv.addObject("view", boardDTO);
+		 mv.addObject("board", "notice");
+		 mv.setViewName("board/boardView");
+		return mv;
+	}
+	
+	
+	//Update
+	@RequestMapping(value="noticeUpdate", method=RequestMethod.GET)
+	public String update(Model model, int num) throws Exception{
+		BoardDTO boardDTO = noticeService.selectOne(num);
+		model.addAttribute("board", "notice");
+		model.addAttribute("view", boardDTO);
+		return "board/boardUpdate";
+	}
+	@RequestMapping(value="noticeUpdate", method=RequestMethod.POST)
+	public ModelAndView update(int num, BoardDTO boardDTO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		int result = noticeService.update(boardDTO);
+		if(result > 0){
+			mv.addObject("message", "Success");
+		}else{
+			mv.addObject("message", "Fail");
+		}
+		mv.addObject("path", "noticeList");
+		mv.setViewName("common/result");
+		return mv;
+	}
+	
+	
+	//Delete
+	@RequestMapping(value="noticeDelete")
+	public ModelAndView delete(int num, HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		int result = noticeService.delete(num, session);
+		if(result > 0){
+			mv.addObject("message", "Success");
+		}else{
+			mv.addObject("message", "Fail");
+		}
+		mv.addObject("path", "noticeList");
+		mv.setViewName("common/result");
+		return mv;
 	}
 
 	
