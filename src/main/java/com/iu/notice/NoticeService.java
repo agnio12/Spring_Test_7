@@ -48,7 +48,6 @@ public class NoticeService implements BoardService {
 		
 		FileSaver fs = new FileSaver();
 		String filePath = session.getServletContext().getRealPath("resources/upload");
-		System.out.println(filePath);
 		File f = new File(filePath);
 		if(!f.exists()){
 			f.mkdirs();

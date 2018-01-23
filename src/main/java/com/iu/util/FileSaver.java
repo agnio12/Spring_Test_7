@@ -15,7 +15,6 @@ public class FileSaver {
 		String fileName = file.getOriginalFilename(); //원본 파일명
 		fileName = fileName.substring(fileName.indexOf(".")); //원본 파일명에서 확장자만 빼내기
 		fileName = UUID.randomUUID().toString()+fileName; //빼낸 확장자 앞에 이상한 문자열 더하기
-		
 		/* 확장자만 빼내는 과정을 제외 시키고 바로 이상한 문자열 + _ + 파일명 을 해도 가능하다 (이상한 문자열 _ iu.jpg)
 		String fileName = file.getOriginalFilename();
 		fileName = UUID.randomUUID().toString()+"_"+fileName; */

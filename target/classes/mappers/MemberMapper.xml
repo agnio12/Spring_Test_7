@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberMapper">
+	
+	<!-- Join -->
+	<insert id="memberJoin" parameterType="MemberDTO">
+		insert into member values(#{id},#{pw},#{name},#{email},#{phone},#{age},#{job},#{fname},#{oname})
+	</insert>
+	
+	<!-- ID Check -->
+	<select id="memberIdCheck" parameterType="String" resultType="MemberDTO">
+		select id from member where id=#{id}
+	</select>
+	
+	<!-- Login -->
+	<select id="memberLogin" parameterType="MemberDTO" resultType="MemberDTO">
+		select * from member where id=#{id} and pw=#{pw}		
+	</select>
+	
+	<!-- MyPage -->
+	<select id="memberMyPage" parameterType="String" resultType="MemberDTO">
+		select * from member where id=#{id}
+	</select>
+</mapper>

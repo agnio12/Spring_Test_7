@@ -11,6 +11,7 @@ public class MemberDTO {
 	private String job;
 	private String fname;
 	private String oname;
+	
 	public String getId() {
 		return id;
 	}
