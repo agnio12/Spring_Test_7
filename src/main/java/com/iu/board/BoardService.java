@@ -20,7 +20,7 @@ public interface BoardService {
 	public int insert(BoardDTO boardDTO, MultipartFile [] file,HttpSession session) throws Exception;
 	
 	//Update
-	public int update(BoardDTO boardDTO) throws Exception;
+	public int update(BoardDTO boardDTO, MultipartFile[] file, HttpSession session) throws Exception;
 	
 	//Delete
 	public int delete(int num, HttpSession session) throws Exception;

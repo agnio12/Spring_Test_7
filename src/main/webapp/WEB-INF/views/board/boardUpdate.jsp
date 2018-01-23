@@ -30,6 +30,7 @@ $(function() {
 				 		 }
 				 	 }
 				 });
+				 alert("삭제 되었습니다")
 			}else{
 				alert("취소 되었습니다")
 			}
@@ -74,7 +75,10 @@ $(function() {
 	cursor: pointer;
 }
 
-.x, .del:hover {
+.x:hover {
+	color: red;
+}
+.del:hover {
 	color: red;
 }
 </style>
@@ -83,7 +87,7 @@ $(function() {
 <body>
 	<h1>${board}Update</h1>
 
-	<form action="noticeviewdate" method="post" enctype="multipart/form-data">
+	<form action="noticeUpdate" method="post" enctype="multipart/form-data">
 		<p><input type="hidden" name="num" value="${view.num}"></p>
 		<p>Writer : <input type="text" value="${view.writer}" disabled="disabled"></p>
 		<p>TITLE : <input type="text" name="title" value="${view.title}"></p>

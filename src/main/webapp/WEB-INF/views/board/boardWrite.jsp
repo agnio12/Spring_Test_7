@@ -55,25 +55,16 @@
 <body>
 	<h1>${board}Write</h1>
 	<form action="./${board}Write" method="post" enctype="multipart/form-data">
-		<p>
-			Writer : <input type="text" name="writer">
-		</p>
-		<p>
-			Title : <input type="text" name="title">
-		</p>
-		<p>
-			Contents :
-			<textarea rows="" cols="" name="contents"></textarea>
-		</p>
-		<p>
-			<input type="button" value="FileAdd" id="btn">
-		</p>
+		<p>Writer : <input type="text" name="writer"></p>
+		<p>Title : <input type="text" name="title"></p>
+		<p>Contents : <textarea rows="" cols="" name="contents"></textarea></p>
+		<p><input type="button" value="FileAdd" id="btn"></p>
 		<div id="result"></div>
 		<button>Write</button>
 	</form>
 
 	<div id="ex">
-		<input type="file" name="file"><span class="x">X</span>
+		<p><input type="file" name="file"><span class="x">X</span></p>
 	</div>
 
 </body>

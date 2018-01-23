@@ -78,7 +78,7 @@ public class NoticeController {
 	}
 	
 	
-	//Update
+	//Update & FileInsert
 	@RequestMapping(value="noticeUpdate", method=RequestMethod.GET)
 	public String update(Model model, int num) throws Exception{
 		BoardDTO boardDTO = noticeService.selectOne(num);
@@ -87,9 +87,9 @@ public class NoticeController {
 		return "board/boardUpdate";
 	}
 	@RequestMapping(value="noticeUpdate", method=RequestMethod.POST)
-	public ModelAndView update(int num, BoardDTO boardDTO) throws Exception{
+	public ModelAndView update(BoardDTO boardDTO, MultipartFile[] file, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		int result = noticeService.update(boardDTO);
+		int result = noticeService.update(boardDTO, file, session);
 		if(result > 0){
 			mv.addObject("message", "Success");
 		}else{
