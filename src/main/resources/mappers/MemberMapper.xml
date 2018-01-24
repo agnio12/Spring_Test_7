@@ -1,24 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MemberMapper">
-	
+
 	<!-- Join -->
 	<insert id="memberJoin" parameterType="MemberDTO">
-		insert into member values(#{id},#{pw},#{name},#{email},#{phone},#{age},#{job},#{fname},#{oname})
+		insert into member  (id, pw, name, email, phone, age, job, fname, oname)
+		values(#{id},#{pw},#{name},#{email},#{phone},#{age},#{job},#{fname},#{oname})
 	</insert>
-	
+
 	<!-- ID Check -->
 	<select id="memberIdCheck" parameterType="String" resultType="MemberDTO">
 		select id from member where id=#{id}
 	</select>
-	
+
 	<!-- Login -->
 	<select id="memberLogin" parameterType="MemberDTO" resultType="MemberDTO">
-		select * from member where id=#{id} and pw=#{pw}		
+		select * from member where id=#{id} and pw=#{pw}
 	</select>
-	
+
 	<!-- MyPage -->
 	<select id="memberMyPage" parameterType="String" resultType="MemberDTO">
 		select * from member where id=#{id}
 	</select>
+
+	<!-- Update -->
+	<update id="memberUpdate" parameterType="MemberDTO">
+		update member set
+		pw=#{pw},
+		name=#{name},
+		email=#{email},
+		phone=#{phone},
+		age=#{age},
+		job=#{job},
+		fname=#{fname},
+		oname=#{oname}
+		where id=#{id}
+	</update>
+
+	<!-- Delete -->
+	<delete id="memberDelete" parameterType="MemberDTO">
+		delete member where id=#{id}
+	</delete>
+
 </mapper>

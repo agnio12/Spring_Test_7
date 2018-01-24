@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.iu.member.MemberDTO;
 import com.iu.member.MemberService;
@@ -30,9 +31,9 @@ public class MemberController {
 		int result = 0;
 		result = memberService.memberJoin(memberDTO, file, session);
 		if(result>0){
-			mv.addObject("message", "Success");
+			mv.addObject("message", "Join Success");
 		}else{
-			mv.addObject("message", "Fail");
+			mv.addObject("message", "Join Fail");
 		}
 		mv.addObject("path", "../");
 		mv.setViewName("common/result");
@@ -53,6 +54,7 @@ public class MemberController {
 		return mv;
 	}
 	
+	
 	//Login
 	@RequestMapping(value="memberLogin", method=RequestMethod.GET)
 	public void memberLogin(){ }
@@ -72,12 +74,43 @@ public class MemberController {
 		return mv;
 		}
 	
+	
 	//MyPage
-	@RequestMapping(value="memberMyPage", method=RequestMethod.GET)
-	public void memberMyPage(Model model, String id) throws Exception{
+	@RequestMapping(value="memberMyPage")
+	public void memberMyPage(String id) throws Exception{
+		//Login 으로 인한 session으로 MyPage에서 뿌려줄것이기 때문에 굳이 Service와 DAO에 만들어주지 않아도 된다
+		//하지만 session에 모든 데이터가 담겨져 있지 않다면 새로 DAO와 Service를 만드는것이 좋다
 		MemberDTO memberDTO = memberService.memberMyPage(id);
-		model.addAttribute("my", memberDTO);
 	}
+	
+	
+	//Update
+	@RequestMapping(value="memberUpdate", method=RequestMethod.GET)
+	public void memberUpdate(){}
+	
+	@RequestMapping(value="memberUpdate", method=RequestMethod.POST)
+	public void memberUpdate(MemberDTO memberDTO) throws Exception{
+		int result = memberService.memberUpdate(memberDTO);
+	}
+	
+	
+	//Delete
+	@RequestMapping(value="memberDelete")
+	public ModelAndView memberDelete(HttpSession session, RedirectAttributes rd)throws Exception{
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		int result = memberService.memberDelete(memberDTO, session);
+		ModelAndView mv  = new ModelAndView();
+		if(result > 0){
+			mv.addObject("message", "Delete Success");
+			session.invalidate();
+		}else{
+			mv.addObject("message", "Delete Fail");
+		}
+		mv.addObject("path", "../");
+		mv.setViewName("common/result");
+		return mv;
+	}
+	
 		
 	//LogOut
 	@RequestMapping(value="memberLogOut")

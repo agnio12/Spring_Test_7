@@ -26,6 +26,20 @@
 				}
 			});
 		});
+		
+	/* Post 방식
+		var check=true;
+		$("#id").keyup(function() {
+			var data = $(this).val();
+			$.post("memberIdCheck",{id:data},function(result){
+				if(result.trim()==0){
+					$("#result").html("이미 있는 ID");
+				}else {
+					$("#result").html("사용 가능 ID");
+				}
+			});
+		}); */
+		
 	});
 </script>
 <style type="text/css">
