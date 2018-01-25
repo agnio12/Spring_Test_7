@@ -7,9 +7,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <title>UPDATE</title>
 <script type="text/javascript">
 $(function() {
+	//전역변수
+	var obj = [];
+	//스마트에디터 프레임생성
+	nhn.husky.EZCreator.createInIFrame({
+		oAppRef : obj,
+		elPlaceHolder : "contents",
+		sSkinURI : "../resources/SE2/SmartEditor2Skin.html",
+		htParams : {
+			// 툴바 사용 여부
+			bUseToolbar : true,
+			// 입력창 크기 조절바 사용 여부
+			bUseVerticalResizer : true,
+			// 모드 탭(Editor | HTML | TEXT) 사용 여부
+			bUseModeChanger : true,
+		}
+	});
+	//전송버튼
+	$("#save").click(function() {
+		//id가 smarteditor인 textarea에 에디터에서 대입
+		obj.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+		//폼 submit
+		$("#frm").submit();
+	});
+	
 	var i = ${fn:length(view.files)}; // fn 태그 함수
 	
 	$(".del").click(function() {
@@ -87,11 +112,11 @@ $(function() {
 <body>
 	<h1>${board}Update</h1>
 
-	<form action="noticeUpdate" method="post" enctype="multipart/form-data">
+	<form id="frm" action="noticeUpdate" method="post" enctype="multipart/form-data">
 		<p><input type="hidden" name="num" value="${view.num}"></p>
 		<p>Writer : <input type="text" value="${view.writer}" disabled="disabled"></p>
 		<p>TITLE : <input type="text" name="title" value="${view.title}"></p>
-		<p>CONTENTS : <textarea rows="" cols="" name="contents">${view.contents }</textarea></p>
+		<p>CONTENTS : <textarea rows="" cols="" name="contents" id="contents">${view.contents }</textarea></p>
 		
 		<c:forEach items="${view.files}" var="file">
 			<p><input type="text" readonly="readonly" value="${file.oname}"> <span class="del" title="${file.fnum}" id="${file.fname}"> X </span></p>
@@ -99,7 +124,7 @@ $(function() {
 		
 		<p><input type="button" value="FileAdd" id="btn"></p>
 		<div id="result"></div>
-		<input type="submit" value="UP">
+		<input type="button" value="UP" id="save">
 	</form>
 
 	<div id="ex">

@@ -4,7 +4,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,10 +76,13 @@ public class MemberController {
 	
 	//MyPage
 	@RequestMapping(value="memberMyPage")
-	public void memberMyPage(String id) throws Exception{
-		//Login 으로 인한 session으로 MyPage에서 뿌려줄것이기 때문에 굳이 Service와 DAO에 만들어주지 않아도 된다
-		//하지만 session에 모든 데이터가 담겨져 있지 않다면 새로 DAO와 Service를 만드는것이 좋다
-		MemberDTO memberDTO = memberService.memberMyPage(id);
+	public void memberMyPage(HttpSession session) throws Exception{
+		/*Login 으로 인한 session으로 MyPage에서 뿌려줄것이기 때문에 굳이 Service와 DAO에 만들어주지 않아도 된다
+		하지만 session에 모든 데이터가 담겨져 있지 않다면 새로 DAO와 Service를 만드는것이 좋다
+		memberService.memberMyPage 를 가져올때는 session으로 id 를 가져와야 한다
+		그러지 않으면 memberService.memberMyPage의 id와 이미 session으로 가져오는 id가 겹쳐 sql문도 겹쳐서 에러발생
+		MemberDTO memberDTO = memberService.memberMyPage(((MemberDTO)session.getAttribute("member")).getId());
+		return memberDTO;*/
 	}
 	
 	
@@ -89,8 +91,18 @@ public class MemberController {
 	public void memberUpdate(){}
 	
 	@RequestMapping(value="memberUpdate", method=RequestMethod.POST)
-	public void memberUpdate(MemberDTO memberDTO) throws Exception{
-		int result = memberService.memberUpdate(memberDTO);
+	public ModelAndView memberUpdate(MemberDTO memberDTO, MultipartFile file, HttpSession session) throws Exception{
+		int result = memberService.memberUpdate(memberDTO, file, session);
+		String message = "Update Fail";
+		if(result > 0){
+			session.setAttribute("member", memberDTO);
+			message = "Update Success";
+		}
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("message", message);
+		mv.addObject("path", "memberMyPage");
+		mv.setViewName("common/result");
+		return mv;
 	}
 	
 	

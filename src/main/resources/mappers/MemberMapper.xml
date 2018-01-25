@@ -24,16 +24,21 @@
 	</select>
 
 	<!-- Update -->
+	<!-- trim → <trim prefix="set" suffixOverrides=","></trim> -->
 	<update id="memberUpdate" parameterType="MemberDTO">
-		update member set
+		update member
+		<set>
 		pw=#{pw},
 		name=#{name},
 		email=#{email},
 		phone=#{phone},
 		age=#{age},
 		job=#{job},
+		<if test="fname != null">
 		fname=#{fname},
 		oname=#{oname}
+		</if>
+		</set>
 		where id=#{id}
 	</update>
 
